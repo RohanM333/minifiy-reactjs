@@ -1,22 +1,29 @@
 {
-  "name": "my-app",
+  "name": "my-optimized-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "react-app-rewired": "^2.1.8",
-    "customize-cra": "^1.0.0"
+    "styled-components": "^5.3.3"  // If you are using styled-components
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.3",
+    "critical": "^4.0.0",
+    "cssnano": "^4.1.11",
+    "customize-cra": "^1.0.0",
+    "postcss-cli": "^8.3.1",
+    "react-app-rewired": "^2.1.8",
     "terser-webpack-plugin": "^5.2.5"
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build && npm run build:css && npm run critical",
+    "build:css": "postcss build/static/css/*.css -d build/static/css/",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-app-rewired eject",
+    "critical": "npx critical --base=./build --inline --css=build/static/css/main.*.css --html=build/index.html --dest=build/index.html"
   },
   "eslintConfig": {
     "extends": [
